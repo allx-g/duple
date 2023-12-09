@@ -16,4 +16,4 @@ Thanks for being AWESOME. In return, here's a (hopefully) awesome game. I love y
 ---
 
 ### Ready to play?
-Visit this [link](https://github.com/allx-g/duple/).
+Visit this [link](https://allx-g.github.io/duple/).
