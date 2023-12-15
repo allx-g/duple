@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,12 +8,21 @@
 		<title>Duple</title>
 	</head>
 	<body>
-		<p id="message-display">Type a word</p>
-		<div class="input-area">
-			<label for="user-input">Enter a word</label>
-			<input type="text" id="user-input" />
-			<button id="submit-button" type="button">Enter</button>
-		</div>
-		<div id="recent-words"></div>
+        <nav class="top-nav">
+            <h1 class="game-title">Duple</h1>
+            <ul class="links-container">
+                <li><a href="" class="link">Rules</a></li>
+                <li><a href="" class="link">About the Game</a></li>
+                <li><button id="theme-toggle"></button></li>
+            </ul>
+        </nav>
+		<main>
+            <p id="message-display">Type a word</p>
+            <div class="input-area">
+                <input type="text" id="user-input" placeholder="Enter a word"/>
+                <button id="submit-button" type="button">Enter</button>
+            </div>
+            <div id="recent-words"></div>
+        </main>
 	</body>
 </html>
