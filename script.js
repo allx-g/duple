@@ -59,6 +59,10 @@ function handleInput() {
 				res = false;
 			}
 		});
+
+        if (input === "") {
+            res = false;
+        }
 		return res;
 	}
 
