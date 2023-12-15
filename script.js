@@ -1,6 +1,8 @@
 const inputBox = document.querySelector("#user-input");
 const enterButton = document.querySelector("#submit-button");
 const messageDisplay = document.querySelector("#message-display");
+const wordsUsed = new Trie();
+const recentWords = document.querySelector("#recent-words");
 
 enterButton.addEventListener('click', handleInput);
 
@@ -8,15 +10,37 @@ function handleInput() {
     const input = inputBox.value.toLowerCase();
     clearInputField();
     
-    message = (isValidWord(input)) ? sendMessage("Nice word!") : sendMessage("Try again");
 
-    console.log(message);
+    if (isValidWord(input)) {
+
+        const word = input;
+        
+        if (wordsUsed.contains(word)) {
+            sendMessage("Duple! That was a great run. Try again!");
+        }
+        else {
+            wordsUsed.insert(word);
+            sendMessage("Woah, nice word!");
+            updateRecents(word);
+        }
+
+        
+
+    }
+    else {
+        sendMessage("That's not even a word man.")
+    }
+
+    function updateRecents(word) {
+        const newWord = document.createElement("p");
+        newWord.textContent = word;
+        recentWords.prepend(newWord);
+    }
     
     function isValidWord(input) {
         let res = true
 
         Array.from(input).forEach(char => {
-            console.log(char.charCodeAt(0))
             const A_ASCII_CODE = 97;
             const Z_ASCII_CODE = 122;
             if (!(char.charCodeAt(0) >= A_ASCII_CODE && char.charCodeAt(0) <= Z_ASCII_CODE)) {
