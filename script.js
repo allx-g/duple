@@ -5,6 +5,9 @@ let wordsUsed = new Trie();
 const recentWords = document.querySelector("#recent-words");
 
 enterButton.addEventListener("click", handleInput);
+inputBox.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") { handleInput() }
+});
 
 function handleInput() {
 	const input = inputBox.value.toLowerCase();
