@@ -1,3 +1,7 @@
+
+const dictionary = new Typo("en_US", false, false, { dictionaryPath: "dictionaries/"});
+
+
 const inputBox = document.querySelector("#user-input");
 const enterButton = document.querySelector("#submit-button");
 const messageDisplay = document.querySelector("#message-display");
@@ -16,14 +20,26 @@ function handleInput() {
 	if (isValidWord(input)) {
 		const word = input;
 
+		
 		if (wordsUsed.contains(word)) {
 			sendMessage("Duple! That was a great run. Try again!");
 			clearRecents();
 			wordsUsed = new Trie();
-		} else {
+		}
+		else if (dictionary.check(word)) {
 			wordsUsed.insert(word);
 			sendMessage("Woah, nice word!");
 			updateRecents(word);
+		}
+		else {
+			const suggestions = dictionary.suggest(word);
+
+			if (suggestions.length == 0) {
+				sendMessage("I have no clue what that word is.")
+			}
+			else {
+				sendMessage(`Typo! Did you mean: ${dictionary.suggest(word)[0]}?`);
+			}
 		}
 	} else {
 		sendMessage("That's not even a word man.");
