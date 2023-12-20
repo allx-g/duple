@@ -1,5 +1,8 @@
 
-const dictionary = new Typo("en_US", false, false, { dictionaryPath: "dictionaries/"});
+const lang = BJSpell('https://rawcdn.githack.com/maheshmurag/bjspell/master/dictionary.js/en_US.js', function() {
+	enterButton.disabled = false;
+});
+  
 
 
 const inputBox = document.querySelector("#user-input");
@@ -19,30 +22,35 @@ function handleInput() {
 
 	if (isValidWord(input)) {
 		const word = input;
-
 		
 		if (wordsUsed.contains(word)) {
 			sendMessage("Duple! That was a great run. Try again!");
 			clearRecents();
 			wordsUsed = new Trie();
 		}
-		else if (dictionary.check(word)) {
+		else if (lang.check(word)) {
 			wordsUsed.insert(word);
 			sendMessage("Woah, nice word!");
 			updateRecents(word);
 		}
 		else {
-			const suggestions = dictionary.suggest(word);
+			const suggestion = lang.suggest(word,1);
 
-			if (suggestions.length == 0) {
+			if (suggestion.length == 0) {
 				sendMessage("I have no clue what that word is.")
 			}
 			else {
-				sendMessage(`Typo! Did you mean: ${dictionary.suggest(word)[0]}?`);
+				sendMessage(`Typo! Did you mean: ${suggestion}?`);
 			}
 		}
-	} else {
-		sendMessage("That's not even a word man.");
+	} 
+	else {
+		if (input.length > 16) {
+			sendMessage('That\'s too long');
+		}
+		else {
+			sendMessage("That's not even a word man.");
+		}
 	}
 
 	function clearRecents() {
@@ -63,22 +71,29 @@ function handleInput() {
 	function isValidWord(input) {
 		let res = true;
 
-		Array.from(input).forEach((char) => {
-			const A_ASCII_CODE = 97;
-			const Z_ASCII_CODE = 122;
-			if (
-				!(
-					char.charCodeAt(0) >= A_ASCII_CODE &&
-					char.charCodeAt(0) <= Z_ASCII_CODE
-				)
-			) {
-				res = false;
-			}
-		});
+		if (input === "") {
+			res = false;
+		}
 
-        if (input === "") {
-            res = false;
-        }
+		else if (input.length > 16) {
+			res = false;
+		}
+
+		else {
+			Array.from(input).forEach((char) => {
+				const A_ASCII_CODE = 97;
+				const Z_ASCII_CODE = 122;
+				if (
+					!(
+						char.charCodeAt(0) >= A_ASCII_CODE &&
+						char.charCodeAt(0) <= Z_ASCII_CODE
+					)
+				) {
+					res = false;
+				}
+			});
+		}
+
 		return res;
 	}
 
