@@ -146,6 +146,10 @@ body {
   gap: 1rem;
 }
 
+.title-container a {
+  text-decoration: none;
+}
+
 .game-title {
     margin-top: 0;
     padding: 0;
@@ -210,6 +214,7 @@ input#user-input {
 
 button#submit-button {
     background-color: var(--primary);
+    color: var(--background);
     padding: 0.5rem 1rem;
     border-radius: 1rem;
     border: 3px solid transparent;
