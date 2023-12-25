@@ -4,17 +4,37 @@ const lang = BJSpell('https://rawcdn.githack.com/maheshmurag/bjspell/master/dict
 });
   
 
+let wordsUsed = new Trie();
 
 const inputBox = document.querySelector("#user-input");
 const enterButton = document.querySelector("#submit-button");
+const themeToggle = document.querySelector("#theme-toggle")
 const messageDisplay = document.querySelector("#message-display");
-let wordsUsed = new Trie();
 const recentWords = document.querySelector("#recent-words");
+
+var storedTheme = localStorage.getItem('theme') || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+if (storedTheme) {
+    document.documentElement.setAttribute('data-theme', storedTheme);
+}
+
 
 enterButton.addEventListener("click", handleInput);
 inputBox.addEventListener("keydown", (e) => {
     if (e.key === "Enter") { handleInput() }
 });
+themeToggle.addEventListener("click", switchTheme);
+
+function switchTheme() {
+	var currentTheme = document.documentElement.getAttribute("data-theme");
+    var targetTheme = "light";
+
+    if (currentTheme === "light") {
+        targetTheme = "dark";
+    }
+
+    document.documentElement.setAttribute('data-theme', targetTheme)
+    localStorage.setItem('theme', targetTheme);
+}
 
 function handleInput() {
 	const input = inputBox.value.toLowerCase();
