@@ -129,15 +129,17 @@ function handleInput() {
 	}
 
 	function updateHighScore() {
-		if ("highscore" in localStorage) {
+		if (!("highscore" in localStorage)) {
 			localStorage.setItem('highscore', score);
+			console.log('set high score for the first time.');
 		}
 		else {
 			if (score > localStorage.getItem('highscore')) {
 				localStorage.setItem('highscore', score);
+				console.log('set new high score.')
 			}
 		}
-		highscoreDisplay.textContent = score;
+		highscoreDisplay.textContent = localStorage.getItem('highscore');
 	}
 
 	function updateScore(pointsToAdd) {
