@@ -11,12 +11,19 @@ const enterButton = document.querySelector("#submit-button");
 const themeToggle = document.querySelector("#theme-toggle")
 const messageDisplay = document.querySelector("#message-display");
 const recentWords = document.querySelector("#recent-words");
+const scoreDisplay = document.querySelector("#score-display");
+const highscoreDisplay = document.querySelector("#highscore");
+
+let score = 0;
 
 var storedTheme = localStorage.getItem('theme') || (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
 if (storedTheme) {
     document.documentElement.setAttribute('data-theme', storedTheme);
 }
 
+if (localStorage.getItem('highscore')) {
+	highscoreDisplay.textContent = localStorage.getItem('highscore');
+}
 
 enterButton.addEventListener("click", handleInput);
 inputBox.addEventListener("keydown", (e) => {
@@ -45,13 +52,17 @@ function handleInput() {
 		
 		if (wordsUsed.contains(word)) {
 			sendMessage("Duple! That was a great run. Try again!");
+			updateHighScore();
+			score = 0;
 			clearRecents();
 			wordsUsed = new Trie();
 		}
 		else if (lang.check(word)) {
 			wordsUsed.insert(word);
 			sendMessage("Woah, nice word!");
+			const pointsEarned = word.length;
 			updateRecents(word);
+			updateScore(pointsEarned);
 		}
 		else {
 			const suggestion = lang.suggest(word,1);
@@ -115,6 +126,23 @@ function handleInput() {
 		}
 
 		return res;
+	}
+
+	function updateHighScore() {
+		if ("highscore" in localStorage) {
+			localStorage.setItem('highscore', score);
+		}
+		else {
+			if (score > localStorage.getItem('highscore')) {
+				localStorage.setItem('highscore', score);
+			}
+		}
+		highscoreDisplay.textContent = score;
+	}
+
+	function updateScore(pointsToAdd) {
+		score += pointsToAdd;
+		scoreDisplay.textContent = `Score: ${score}`;
 	}
 
 	function clearInputField() {

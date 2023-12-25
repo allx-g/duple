@@ -10,7 +10,10 @@
 	</head>
 	<body>
         <nav class="top-nav">
-            <h1 class="game-title">Duple</h1>
+            <div class="title-container">
+                <h1 class="game-title">Duple</h1>
+                <p id="highscore"></p>
+            </div>
             <ul class="links-container">
                 <li><a href="" class="link">Rules</a></li>
                 <li><a href="" class="link">About the Game</a></li>
@@ -18,6 +21,7 @@
             </ul>
         </nav>
 		<main>
+            <p id="score-display"></p>
             <p id="message-display">Type a word</p>
             <div class="input-area">
                 <input type="text" id="user-input" placeholder="Enter a word"/>
